@@ -1,0 +1,68 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: echoserver
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: bar-echoserver
+  namespace: echoserver
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: bar-echoserver
+  template:
+    metadata:
+      labels:
+        app: bar-echoserver
+    spec:
+      volumes:
+        - name: vol
+          emptyDir: {}
+      containers:
+        - image: hashicorp/http-echo
+          name: bar-echoserver
+          volumeMounts:
+            - mountPath: /tmp
+              name: vol
+          securityContext:
+            runAsNonRoot: true
+            readOnlyRootFilesystem: true
+          args:
+            - "-listen=:8081"
+            - "-text=bar"
+          resources:
+            requests:
+              memory: "128Mi"
+              cpu: "250m"
+            limits:
+              memory: "128Mi"
+              cpu: "500m"
+          readinessProbe:
+            httpGet:
+              path: /
+              port: 8081
+            initialDelaySeconds: 5
+            periodSeconds: 10
+          livenessProbe:
+            httpGet:
+              path: /
+              port: 8081
+            initialDelaySeconds: 7
+            periodSeconds: 30
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: bar-echoserver-svc
+  namespace: echoserver
+spec:
+  ports:
+    - port: 8081
+      protocol: TCP
+  type: NodePort # chooses between 30,000 to 32,767
+  selector:
+    app: bar-echoserver
