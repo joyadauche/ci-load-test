@@ -11,3 +11,8 @@ jobs:
         steps:
             - name: Checkout code
               uses: actions/checkout@v4
+            - name: Run vulnerability checks for manifest files
+              uses: instrumenta/conftest-action@master
+              with:
+                files: manifests/
+                policy: opa/manifests.rego
