@@ -1,3 +1,7 @@
+module "kube-prometheus" {
+  source = "./modules/monitoring"
+}
+
 resource "kind_cluster" "ci-load-test" {
   name            = var.cluster_name
   kubeconfig_path = pathexpand(var.kubeconfig_path)
