@@ -34,6 +34,8 @@ jobs:
             - name: Run load tests
               id: run_load_test
               run: sh .github/scripts/run-load-test.sh
+            - name: Capture prometheus metrics for the last 5 minutes
+              run: curl -sS http://localhost:9090/api/v1/query\?query\=node_load5
             - name: Comment on PR
               uses: thollander/actions-comment-pull-request@v2.4.3
               with:
