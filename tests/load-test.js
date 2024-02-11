@@ -9,9 +9,9 @@ export const options = {
     http_req_duration: ["p(90)<200", "p(95)<300"],
   },
   stages: [
-    { duration: "30s", target: 30 }, 
-    { duration: "1m", target: 30 }, 
-    { duration: "30s", target: 0 },
+    { duration: "50s", target: 200 }, 
+    { duration: "5m", target: 200 }, 
+    { duration: "50s", target: 0 },
   ],
 };
 
@@ -42,7 +42,7 @@ export function handleSummary(data) {
     const errors_message = `The error values are ${errors}\n`;
 
     const traffic = JSON.stringify(data.metrics.http_reqs.values);
-    const traffic_message = `The error values are ${traffic}\n`;
+    const traffic_message = `The traffic values are ${traffic}\n`;
   
     return {
       stdout: latency_message.concat(errors_message, traffic_message),
