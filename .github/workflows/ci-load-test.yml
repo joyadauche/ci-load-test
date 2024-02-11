@@ -34,8 +34,8 @@ jobs:
             - name: Run load tests
               id: run_load_test
               run: sh .github/scripts/run-load-test.sh
-            - name: Capture prometheus metrics for the last 5 minutes
-              run: sh .github/scripts/capture-prometheus-metrics.sh
+            - name: Capture metrics
+              run: sh .github/scripts/capture-metrics.sh
             - name: Comment on PR
               uses: thollander/actions-comment-pull-request@v2.4.3
               with:
