@@ -4,5 +4,5 @@ kubectl port-forward svc/kube-prometheus-stack-prometheus 9090:9090 --namespace 
 while ! nc -z localhost 9090; do
     sleep 1
 done
+kubectl get pods -n kube-system | grep metrics-server
 curl -sS "http://localhost:9090/api/v1/query\?query\=node_load5"
-kubectl top node
