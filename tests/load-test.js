@@ -41,10 +41,8 @@ export function handleSummary(data) {
 
     const traffic = JSON.stringify(data.metrics.http_req.values);
     const traffic_message = `The error values are ${traffic}\n`;
-
-    const message = latency_message + errors_message + traffic_message
   
     return {
-      stdout: message,
+      stdout: latency_message.concat(errors_message, traffic_message),
     };
   }
