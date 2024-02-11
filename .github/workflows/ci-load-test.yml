@@ -27,7 +27,7 @@ jobs:
             - name: Provision kind cluster
               run: sh .github/scripts/provision-cluster.sh
             - name: Deploy app to kind cluster
-              working-directory: ./manifests/
+              working-directory: manifests/
               run: kubectl apply -f .
             - name: Check app health
               run: sh .github/scripts/check-app-health.sh
@@ -35,7 +35,7 @@ jobs:
               id: run_load_test
               run: sh .github/scripts/run-load-test.sh
             - name: Capture prometheus metrics for the last 5 minutes
-              run: curl -sS http://localhost:9090/api/v1/query\?query\=node_load5
+              run: sh .github/scripts/capture-prometheus-metrics
             - name: Comment on PR
               uses: thollander/actions-comment-pull-request@v2.4.3
               with:

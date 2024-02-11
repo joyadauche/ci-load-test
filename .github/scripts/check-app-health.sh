@@ -11,9 +11,9 @@ fi
 # check app pods
 result=$(kubectl get pods -n echoserver  -o json | jq -r '.items[].status.phase' | tr '\n' ', ' | sed 's/, $//') 
 echo "App Pods Status: $result"
-for i in $(echo $variable | sed "s/,/ /g")
+for status in $(echo $result | sed "s/,/ /g")
 do
-    if [[ "${result}" != "Running" ]]; then
+    if [[ "${status}" != "Running" ]]; then
      exit 1
     fi
 done
