@@ -30,21 +30,21 @@ export default function () {
     }
 }
 
-export function handleSummary(data) {
-    console.log('Finished executing load tests');
+// export function handleSummary(data) {
+//     console.log('Finished executing load tests');
 
-    console.log("Check values:", JSON.stringify(data.metrics))
+//     console.log("Check values:", JSON.stringify(data.metrics))
 
-    const latency = JSON.stringify(data.metrics.http_req_duration.values);
-    const latency_message = `The latency values are ${latency}\n`;
+//     const latency = JSON.stringify(data.metrics.http_req_duration.values);
+//     const latency_message = `The latency values are ${latency}\n`;
 
-    const errors = JSON.stringify(data.metrics.http_req_failed.values);
-    const errors_message = `The error values are ${errors}\n`;
+//     const errors = JSON.stringify(data.metrics.http_req_failed.values);
+//     const errors_message = `The error values are ${errors}\n`;
 
-    const traffic = JSON.stringify(data.metrics.http_reqs.values);
-    const traffic_message = `The traffic values are ${traffic}\n`;
+//     const traffic = JSON.stringify(data.metrics.http_reqs.values);
+//     const traffic_message = `The traffic values are ${traffic}\n`;
   
-    return {
-      stdout: latency_message.concat(errors_message, traffic_message),
-    };
-  }
+//     return {
+//       stdout: latency_message.concat(errors_message, traffic_message),
+//     };
+//   }
