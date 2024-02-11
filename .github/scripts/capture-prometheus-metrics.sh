@@ -1,4 +1,5 @@
-kubectl port-forward svc/kube-prometheus-stack-prometheus 9090:9090 --namespace monitoring --kubeconfig kubeconfig&
+cat ~/.kube/config
+kubectl port-forward svc/kube-prometheus-stack-prometheus 9090:9090 --namespace monitoring --kubeconfig ~/.kube/config&
 curl -sS http://localhost:9090/api/v1/query\?query\=node_load5
 result=$(ps aux | grep 9090 | awk '{print $2}' | tr '\n' ', ' | sed 's/, $//')
 echo "Process Ids: $result"
