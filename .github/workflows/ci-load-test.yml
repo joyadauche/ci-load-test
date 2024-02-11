@@ -31,6 +31,8 @@ jobs:
               run: kubectl apply -f .
             - name: Check app health
               run: sh .github/scripts/check-app-health.sh
+            - name: Install metrics server
+              run: sh .github/scripts/install-metrics-server.sh
             - name: Run load tests
               id: run_load_test
               run: sh .github/scripts/run-load-test.sh
