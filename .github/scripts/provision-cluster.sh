@@ -1,6 +1,6 @@
 set -e
 cd ./terraform/
-terraform initt
+terraform init
 terraform validate
 terraform plan
 terraform apply -auto-approve
