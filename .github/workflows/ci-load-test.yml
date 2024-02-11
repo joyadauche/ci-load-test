@@ -7,7 +7,7 @@ on:
 
 jobs:
     ci-load-test:
-        runs-on: ubuntu-latest       
+        runs-on: ubuntu-latest      
         steps:
             - name: Checkout code
               uses: actions/checkout@v4
@@ -27,3 +27,6 @@ jobs:
               run: kubectl apply -f .
             - name: Check app health
               run: sh .github/scripts/check-app-health.sh
+            - name: Run load tests
+              id: run_load_test
+              run: sh .github/scripts/run-load-test.sh
