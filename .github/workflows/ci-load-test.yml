@@ -7,7 +7,11 @@ on:
 
 jobs:
     ci-load-test:
-        runs-on: ubuntu-latest      
+        runs-on: ubuntu-latest  
+        outputs:
+          LOAD_TEST_OUTPUT: ${{ steps.run_load_test.outputs.LOAD_TEST_OUTPUT }}
+        permissions:
+          pull-requests: write     
         steps:
             - name: Checkout code
               uses: actions/checkout@v4
@@ -30,3 +34,9 @@ jobs:
             - name: Run load tests
               id: run_load_test
               run: sh .github/scripts/run-load-test.sh
+            - name: Comment on PR
+              uses: thollander/actions-comment-pull-request@v2.4.3
+              with:
+                GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
+                message: |
+                  ${{ steps.run_load_test.outputs.LOAD_TEST_OUTPUT }}'
