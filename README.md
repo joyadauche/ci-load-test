@@ -36,7 +36,7 @@ These highlights some errors I faced along with the fixes:
     - Referenced the *local_file* terraform resource in the both the *kubernetes and helm providers config_path argument value*.
   - **Note**: This occurs just in the Github Actions CI runner which runs ubuntu. Provisioning outside the CI runner on a local machine don't have this issue i.e. it can read from the kubeconfig file if specified in the variable.
 
-# Areas for my further research and project improvement
+# Areas for my further research and project improvements
 - Optimizing the CI workflow via caching
 - A truely composable CI for for unit testing e.g using typescript with github actions
 
