@@ -7,7 +7,36 @@ on:
 
 jobs:
     ci-load-test:
-        runs-on: ubuntu-latest       
+        runs-on: ubuntu-latest  
+        outputs:
+          LOAD_TEST_OUTPUT: ${{ steps.run_load_test.outputs.LOAD_TEST_OUTPUT }}
+        permissions:
+          pull-requests: write     
         steps:
             - name: Checkout code
               uses: actions/checkout@v4
+            - name: Run vulnerability checks for manifest files
+              uses: instrumenta/conftest-action@master
+              with:
+                files: manifests/
+                policy: opa/manifests.rego
+            - name: Install tools
+              run: sh .github/scripts/install-tools.sh
+              env:
+                KUBECTL_VERSION: v1.28.2
+            - name: Provision kind cluster
+              run: sh .github/scripts/provision-cluster.sh
+            - name: Deploy app to kind cluster
+              working-directory: ./manifests/
+              run: kubectl apply -f .
+            - name: Check app health
+              run: sh .github/scripts/check-app-health.sh
+            - name: Run load tests
+              id: run_load_test
+              run: sh .github/scripts/run-load-test.sh
+            - name: Comment on PR
+              uses: thollander/actions-comment-pull-request@v2.4.3
+              with:
+                GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
+                message: |
+                  ${{ steps.run_load_test.outputs.LOAD_TEST_OUTPUT }}'
